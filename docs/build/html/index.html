@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Graph Visualization &#8212; network-graph-visualization  documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">network-graph-visualization  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Network Graph Visualization</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="network-graph-visualization">
+<h1>Network Graph Visualization<a class="headerlink" href="#network-graph-visualization" title="Permalink to this headline">¶</a></h1>
+<p>This package creates a visualization of a network graph built with
+Networkx with hovering functions by Plotly.</p>
+<p>Multiple node and edge attributes can be added to the network and shown
+in the visualization.</p>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This package requires networkx version &gt;= 2.5 and plotly version &gt;=
+4.14.3. See <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> for the complete prerequisites.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the package through</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">test</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Below is an example how to use this package. This description also shows
+how to add node and edge attributes to the graph from the corresponding
+pandas dataframes.</p>
+<p><strong>Create two separate dataframes.</strong> One with information about the nodes and
+one with information about the connections. For simplicity, call them
+<code class="docutils literal notranslate"><span class="pre">connections_df</span></code> and <code class="docutils literal notranslate"><span class="pre">nodes_df</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connections_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">CONNECTIONS_FILENAME</span><span class="p">)</span>
+<span class="n">nodes_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">NODES_FILENAME</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Build an empty graph.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Add edge attributes.</strong> Create a column of connections as input for
+Networkx. Set these as the index, Convert dataframe to dictionary where
+the indices are the key and the attributes the values. Add edges and
+their attributes to empty graph.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connections_df</span><span class="p">[</span><span class="s1">&#39;connections&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">connections_df</span><span class="p">[</span><span class="s1">&#39;SOURCE_VARIABLE&#39;</span><span class="p">],</span> <span class="n">connections_df</span><span class="p">[</span><span class="s1">&#39;TARGET_VARIABLE&#39;</span><span class="p">]))</span>
+<span class="n">connections_temp</span> <span class="o">=</span> <span class="n">connections_df</span><span class="p">[[</span><span class="s1">&#39;connections&#39;</span><span class="p">,</span> <span class="s1">&#39;EDGE_ATTRIBUTE_1&#39;</span><span class="p">,</span> <span class="s1">&#39;EDGE_ATTRIBUTE_2&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;connections&#39;</span><span class="p">)</span>
+<span class="n">connections_dict</span> <span class="o">=</span> <span class="n">connections_temp</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">((</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">d</span> <span class="ow">in</span> <span class="n">connections_dict</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</pre></div>
+</div>
+<p><strong>Add node attributes.</strong> In contrast to edge attributes node attributes can
+be added all at once.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nodes_temp</span> <span class="o">=</span> <span class="n">nodes_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;NODE_NAME_VARIABLE&#39;</span><span class="p">)</span>
+<span class="n">nodes_dict</span> <span class="o">=</span> <span class="n">nodes_temp</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">set_node_attributes</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">nodes_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Call the package.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plot</span>
+<span class="n">network_plot</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">GraphNetwork</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>View graph attributes.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">network_plot</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">network_plot</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Optional to add all node and edge attributes as hovering text.</strong></p>
+<p><strong>Add node hover text.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NODE_HOVERTEXT</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">():</span>
+    <span class="n">NODE_HOVERTEXT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="s2">&quot;Name: &quot;</span> <span class="o">+</span> <span class="n">node</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span> <span class="o">+</span> \
+                    <span class="s2">&quot;NODE_ATTRIBUTE_1: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_plot</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;NODE_ATTRIBUTE_1&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span> <span class="o">+</span> \
+                    <span class="s2">&quot;NODE_ATTRIBUTE_2: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">network_plot</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s1">&#39;NODE_ATTRIBUTE_2&#39;</span><span class="p">])</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Add edge hover text.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EDGE_HOVERTEXT</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+    <span class="n">EDGE_HOVERTEXT</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="s2">&quot;EDGE_ATTRIBUTE_1: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge</span><span class="p">][</span><span class="s1">&#39;EDGE_ATTRIBUTE_1&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&lt;br&gt;&quot;</span> <span class="o">+</span> \
+                    <span class="s2">&quot;EDGE_ATTRIBUTE_2: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">[</span><span class="n">edge</span><span class="p">][</span><span class="s1">&#39;EDGE_ATTRIBUTE_2&#39;</span><span class="p">])</span>
+                    <span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Run node and edge traces.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network_plot</span><span class="o">.</span><span class="n">trace_nodes</span><span class="p">(</span><span class="n">node_color_variable</span><span class="o">=</span><span class="s1">&#39;NODE_ATTRIBUTE_1&#39;</span><span class="p">,</span> <span class="n">node_text</span><span class="o">=</span><span class="n">NODE_HOVERTEXT</span><span class="p">)</span>
+<span class="n">network_plot</span><span class="o">.</span><span class="n">trace_edges</span><span class="p">(</span><span class="n">edge_text</span><span class="o">=</span><span class="n">EDGE_HOVERTEXT</span><span class="p">)</span> <span class="c1">#edge_attribute=&#39;EDGE_ATTRIBUTE_2&#39;</span>
+</pre></div>
+</div>
+<p><strong>Build visualization.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network_plot</span><span class="o">.</span><span class="n">visualization_attributes</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;TITLE OF THE PLOT&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Draw and visualize th network.</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">network_plot</span><span class="o">.</span><span class="n">draw_network</span><span class="p">(</span><span class="n">graph_filename</span><span class="o">=</span><span class="s1">&#39;GRAPH_FILENAME.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+</div>
+<div class="section" id="module-network_graph_visualization.plot">
+<span id="documentation"></span><h1>Documentation<a class="headerlink" href="#module-network_graph_visualization.plot" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="network_graph_visualization.plot.GraphNetwork">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">network_graph_visualization.plot.</span></code><code class="sig-name descname"><span class="pre">GraphNetwork</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#network_graph_visualization.plot.GraphNetwork" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that builds a network graph in Plotly with Networkx including functions that display node and edge attributes.</p>
+<p>Object requires a graph built with Networkx. If node and edge attributes are to be added to the visualization those attributes need to be added to the graph.</p>
+<dl class="py method">
+<dt id="network_graph_visualization.plot.GraphNetwork.draw_network">
+<code class="sig-name descname"><span class="pre">draw_network</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph.html'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#network_graph_visualization.plot.GraphNetwork.draw_network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>graph_filename</strong> (<em>str</em><em>, </em><em>default='graph.html'</em>) – Name and location of the filename as ‘html’.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Output file with ‘.html’ extension.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="network_graph_visualization.plot.GraphNetwork.trace_edges">
+<code class="sig-name descname"><span class="pre">trace_edges</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edge_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_attribute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#network_graph_visualization.plot.GraphNetwork.trace_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a function to build a dictionary to trace edges, including the text when hovering over an edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edge_text</strong> (<em>list of strings</em><em>, </em><em>default=None</em>) – The hover text corresponding to each edge. 
+The list of strings consists of multiple edge attributes each attribute separated by &lt;br&gt; to indicate a new line.
+The list should be ordered by the order in which the edges appear as in G.edges().</p></li>
+<li><p><strong>edge_attribute</strong> (<em>str</em><em>, </em><em>default=None</em>) – The name of the variable to show as a single edge attribute when hovering over the edge.
+When edge_text equals None AND edge_attribute equals None, no edge attributes are shown.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="network_graph_visualization.plot.GraphNetwork.trace_nodes">
+<code class="sig-name descname"><span class="pre">trace_nodes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_color_variable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#network_graph_visualization.plot.GraphNetwork.trace_nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a function to build a dictionary to trace nodes, including the color and text when hovering over an edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node_color_variable</strong> (<em>str</em>) – The name of the variable that distinguishes nodes by color. 
+The values of the colors are represented as integers. 
+Default equals None when no color is assigned to the nodes.</p></li>
+<li><p><strong>node_text</strong> (<em>list of strings</em>) – The hover text corresponding to each node. 
+The list of strings consists of multiple node attributes each attribute separated by &lt;br&gt; to indicate a new line.
+The list should be ordered by the order in which the nodes appear as in G.nodes().
+The default node text equals None, which means that the name of the node is used when hovering over the node.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="network_graph_visualization.plot.GraphNetwork.visualization_attributes">
+<code class="sig-name descname"><span class="pre">visualization_attributes</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">title=&lt;class</span> <span class="pre">'str'&gt;</span></em><span class="sig-paren">)</span><a class="headerlink" href="#network_graph_visualization.plot.GraphNetwork.visualization_attributes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set axis attributes.</p>
+<p>Default to hiding axis lines, hiding grid, hiding ticklabels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – Title of the graph network plot.</p></li>
+<li><p><strong>showline</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>zeroline</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>showgrid</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>showticklabels</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – Width of the plot.</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – Height of the plot.</p></li>
+<li><p><strong>autosize</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>showlegend</strong> (<em>bool</em>) – Defaults to False</p></li>
+<li><p><strong>margin</strong> (<em>dictionary of key : int value pairs</em>) – l=40,r=40,b=85,t=100,pad=0</p></li>
+<li><p><strong>hovermode</strong> (<em>{'closest'}</em>) – When hovermode equals ‘closest’ a single hover label appears for the point directly underneath the cursor.
+Defaults to ‘closest’.</p></li>
+<li><p><strong>plot_bgcolor</strong> (<em>str</em>) – Set background color.
+Defaults to ‘#ffffff’</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Network Graph Visualization</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-network_graph_visualization.plot">Documentation</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">network-graph-visualization  documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Network Graph Visualization</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Annalie Kruseman.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.1.
+    </div>
+  </body>
+</html>
