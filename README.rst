@@ -1,3 +1,6 @@
+Introduction
+------------
+
 This package creates a visualization of a network graph built with
 Networkx with hovering functions by Plotly.
 
