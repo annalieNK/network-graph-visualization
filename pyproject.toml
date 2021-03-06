@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "network-graph-visualization"
-version = "0.1.3"
+version = "0.1.4"
 description = "This package creates a visualization of a network graph with its attributes displayed."
 authors = ["Annalie Kruseman <annaliakruseman@gmail.com>"]
 license = "MIT"
 readme = "README.rst"
-homepage = "https://github.com/annalieNK/network-graph-visualization"
+homepage = "https://network-graph-visualization.readthedocs.io/en/latest/"
 repository = "https://github.com/annalieNK/network-graph-visualization"
 classifiers=[
     "Programming Language :: Python :: 3",
