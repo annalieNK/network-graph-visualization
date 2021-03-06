@@ -16,11 +16,13 @@ This package requires networkx version >= 2.5 and plotly version >=
 Installation
 ------------
 
-Install the package through
+Start with install the dependencies: pandas, matplotlib, networkx, plotly, Sphinx.
+
+Install the package through:
 
 ::
 
-   test
+   pip install -i https://test.pypi.org/simple/ network-graph-visualization
 
 Usage
 -----
@@ -69,7 +71,7 @@ be added all at once.
 
 ::
 
-   import plot
+   import network_graph_visualization.plot
    network_plot = plot.GraphNetwork(G)
 
 **View graph attributes.**

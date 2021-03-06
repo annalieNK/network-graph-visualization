@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "network-graph-visualization"
-version = "0.1.0"
+version = "0.1.3"
 description = "This package creates a visualization of a network graph with its attributes displayed."
 authors = ["Annalie Kruseman <annaliakruseman@gmail.com>"]
 license = "MIT"
@@ -18,7 +18,7 @@ include = [
 
 [[tool.poetry.source]]
 name = "network-graph-visualization"
-url = "https://github.com/annalieNK/network-graph-visualization/simple/"
+url = "https://test.pypi.org/simple/"
 
 [tool.poetry.dependencies]
 python = "^3.8.6"
