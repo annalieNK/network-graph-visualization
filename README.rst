@@ -31,21 +31,13 @@ Below is an example how to use this package. This description also shows
 how to add node and edge attributes to the graph from the corresponding
 pandas dataframes. The output will be anything similar to the below figures. 
 
-|pic1| any text |pic2|
-
 .. image:: figures/Node_Attributes.png
-   :width: 45%
+    :width: 11
+    :height: 11
 
 .. image:: figures/Edge_Attributes.png
-   :width: 45%
-
-sdfsadf
-
-.. image:: figures/Node_Attributes.png
-    :width: 45 %
-
-.. image:: figures/Edge_Attributes.png
-    :width: 45 %
+    :width: 11
+    :height: 11
 
 
 **Create two separate dataframes.** One with information about the nodes and
