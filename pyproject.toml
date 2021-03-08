@@ -26,6 +26,7 @@ pandas = "^1.2.2"
 matplotlib = "^3.3.4"
 networkx = "^2.5"
 plotly = "^4.14.3"
+numpy = "1.19.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
