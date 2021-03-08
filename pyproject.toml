@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "network-graph-visualization"
-version = "0.1.4"
+version = "0.1.5"
 description = "This package creates a visualization of a network graph with its attributes displayed."
 authors = ["Annalie Kruseman <annaliakruseman@gmail.com>"]
 license = "MIT"
