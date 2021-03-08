@@ -35,6 +35,10 @@ pandas dataframes. The output will be anything similar to the below figures.
 
 `Edge attributes <https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Edge%20Attributes.png?raw=true>`_
 
+.. image:: <https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Node%20Attributes.png?raw=true>
+
+.. image:: figures/Node_Attributes.png
+
 **Create two separate dataframes.** One with information about the nodes and
 one with information about the connections. For simplicity, call them
 ``connections_df`` and ``nodes_df``.
