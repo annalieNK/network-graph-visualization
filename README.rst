@@ -31,18 +31,11 @@ Below is an example how to use this package. This description also shows
 how to add node and edge attributes to the graph from the corresponding
 pandas dataframes. The output will be anything similar to the below figures. 
 
-.. image:: figures/Node_Attributes.png
-    :width: 49%
-
-.. image:: figures/Edge_Attributes.png
-    :width: 49%
-
 .. image:: Node_Attributes.png
-   :target: https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Node_Attributes.png?raw=true
+    :target: https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Node_Attributes.png?raw=true
 
 .. image:: Edge_Attributes.png
-   :target: https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Edge_Attributes.png?raw=true
-
+    :target: https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Edge_Attributes.png?raw=true
 
 **Create two separate dataframes.** One with information about the nodes and
 one with information about the connections. For simplicity, call them
