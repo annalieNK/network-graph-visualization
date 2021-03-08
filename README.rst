@@ -32,12 +32,10 @@ how to add node and edge attributes to the graph from the corresponding
 pandas dataframes. The output will be anything similar to the below figures. 
 
 .. image:: figures/Node_Attributes.png
-    :width: 400
-    :height: 400
-
+    :width: 50 %
+    
 .. image:: figures/Edge_Attributes.png
-    :width: 400
-    :height: 400
+    :width: 50 %
 
 **Create two separate dataframes.** One with information about the nodes and
 one with information about the connections. For simplicity, call them
