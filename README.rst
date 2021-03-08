@@ -29,7 +29,11 @@ Usage
 
 Below is an example how to use this package. This description also shows
 how to add node and edge attributes to the graph from the corresponding
-pandas dataframes.
+pandas dataframes. The output will be anything similar to the below figures. 
+
+`Node attributes <https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Node%20Attributes.png?raw=true>`_
+
+`Edge attributes <https://github.com/annalieNK/network-graph-visualization/blob/main/figures/Edge%20Attributes.png?raw=true>`_
 
 **Create two separate dataframes.** One with information about the nodes and
 one with information about the connections. For simplicity, call them
@@ -124,3 +128,10 @@ be added all at once.
 ::
 
    network_plot.draw_network(graph_filename='GRAPH_FILENAME.html')
+
+Authors and acknowledgment
+--------------------------
+Annalie Kruseman 
+
+Feel free to contact me about any questions related to this package.
+annaliakruseman@gmail.com
