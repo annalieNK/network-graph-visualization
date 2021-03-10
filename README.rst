@@ -76,7 +76,7 @@ be added all at once.
 ::
 
    import network_graph_visualization.plot
-   network_plot = plot.GraphNetwork(G)
+   network_plot = network_graph_visualization.plot.GraphNetwork(G)
 
 **View graph attributes.**
 
