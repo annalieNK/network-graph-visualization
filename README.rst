@@ -135,3 +135,5 @@ Annalie Kruseman
 
 Feel free to contact me about any questions related to this package.
 annaliakruseman@gmail.com
+
+This package has been tested with the Stack Overflow Tag Network as posted on `Kaggle <https://www.kaggle.com/stackoverflow/stack-overflow-tag-network?select=stack_network_links.csv>`_.
