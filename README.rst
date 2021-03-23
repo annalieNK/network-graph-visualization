@@ -8,6 +8,7 @@ Multiple node and edge attributes can be added to the network and shown
 in the visualization.
 
 For the full package description go to https://test.pypi.org/project/network-graph-visualization/.
+
 And for the documentation go to the corresponding Homepage at https://network-graph-visualization.readthedocs.io/en/latest/
 
 Prerequisites
